@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Open rofi with xrdb colors
+
+# load colors
+FOREGROUND=$(xrdb -query | grep 'foreground:'| awk '{print $NF}')
+BACKGROUND=$(xrdb -query | grep 'background:'| awk '{print $NF}')
+BACKGROUNDALT=$(xrdb -query | grep 'backgroundAlt:'| awk '{print $NF}')
+ALERT=$(xrdb -query | grep 'alert:'| awk '{print $NF}')
+ALERTALT=$(xrdb -query | grep 'alertAlt:'| awk '{print $NF}')
+WARN=$(xrdb -query | grep 'warn:'| awk '{print $NF}')
+HIGHLIGHT=$(xrdb -query | grep 'highlight:'| awk '{print $NF}')
+HIGHLIGHTALT=$(xrdb -query | grep 'highlightAlt:'| awk '{print $NF}')
+HIGHLIGHTFOREGROUND=$(xrdb -query | grep 'highlightForeground:'| awk '{print $NF}')
+
+rofi -show drun \
+     -modi run,drun,window \
+     -monitor "-1" \
+     -hide-scrollbar true \
+     -bw 2 \
+     -lines 8 \
+     -padding 12 \
+     -width 32 \
+     -location 0 \
+     -font "Fantasque Sans Mono 12" \
+     -columns 3 \
+     -color-enabled true \
+     -color-window "$BACKGROUND,$HIGHLIGHTALT,$BACKGROUND" \
+     -color-normal "$BACKGROUND,$FOREGROUND,$BACKGROUND,$HIGHLIGHT,$HIGHLIGHTFOREGROUND" 
+
+
+
+

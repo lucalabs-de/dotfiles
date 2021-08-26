@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# the screen we want to connect to
+NEW_SCREEN="DP1"
+RESOLUTION="3440x1440"
+
+OLD_SCREEN=eDP1
+
+xrandr --output "$NEW_SCREEN" --right-of "$OLD_SCREEN" --mode "$RESOLUTION"
+
+# kill previous instances of conky
+wifipid=$(cat /tmp/conkywifi.pid) || 1
+clock1pid=$(cat /tmp/conkyclock1.pid) || 1
+clock2pid=$(cat /tmp/conkyclock2.pid) || 1
+clock3pid=$(cat /tmp/conkyclock3.pid) || 1
+
+if [ "$(ps -o comm= -p "$wifipid")" = "conky" ]; then
+    echo "killed $wifipid"
+    kill -9 "$wifipid"
+fi
+
+if [ "$(ps -o comm= -p "$clock1pid")" = "conky" ]; then
+    echo "killede $clock1pid"
+    kill -9 "$clock1pid"
+fi
+
+if [ "$(ps -o comm= -p "$clock2pid")" = "conky" ]; then
+    echo "killed $clock2pid"
+    kill -9 "$clock2pid"
+fi
+
+if [ "$(ps -o comm= -p "$clock3pid")" = "conky" ]; then
+    echo "killed $clock3pid"
+    kill -9 "$clock3pid"
+fi
+
+# launch conky on the new desktop
+conky -c "$HOME/.config/conky/conky-wifi.conf" -x $((1920+60)) -y 60 &>/dev/null & echo $! > /tmp/conkywifi.pid
+disown $(cat /tmp/conkywifi.pid)
+
+conky -c "$HOME/.config/conky/conky-clock.conf" -x $((1920+60)) -y 100 &>/dev/null & echo $! > /tmp/conkyclock1.pid
+disown $(cat /tmp/conkyclock1.pid)
+
+conky -c "$HOME/.config/conky/conky-clock-2.conf" -x $((1920+60)) -y 140 &>/dev/null & echo $! > /tmp/conkyclock2.pid
+disown $(cat /tmp/conkyclock2.pid)
+
+conky -c "$HOME/.config/conky/conky-clock-3.conf" -x $((1920+60)) -y 180 &>/dev/null & echo $! > /tmp/conkyclock3.pid
+disown $(cat /tmp/conkyclock3.pid)

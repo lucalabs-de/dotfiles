@@ -1,0 +1,34 @@
+! Colorschemes are randomly chosen from .themes
+
+! ----------------------------
+! Fonts
+! ----------------------------
+
+URxvt.font:		xft:Fantasque Sans Mono:regular:size=13
+URxvt.imFont:		xft:Fantasque Sans Mono:italic:size=13
+URxvt.boldFont:		xft:Fantasque Sans Mono:bold:size=13
+URxvt.italicFont:	xft:Fantasque Sans Mono:italic:size=13
+URxvt.boldItalicFont:	xft:Fantasque Sans Mono:bold italic:size=13
+
+URxvt.letterSpace: 1
+URxvt.lineSpace:   0
+
+! ----------------------------
+! URxvt config
+! ----------------------------
+
+URxvt*scrollBar:	false
+URxvt*urgentOnBell:	true
+URxvt*iso14755:		false
+URxvt*cursorBlink:	true
+
+URxvt*internalBorder:	24
+
+! ----------------------------
+! Extensions
+! ----------------------------
+
+URxvt.perl-ext-common:		default,keyboard-select
+URxvt.keysym.Control-Space:	perl:keyboard-select:activate
+
+
