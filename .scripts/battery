@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $(cat /sys/class/power_supply/BAT1/capacity) -lt 100 ]; then
+if [ $(cat /sys/class/power_supply/BAT1/capacity) -lt 10 ]; then
     if [ $DISPLAY ]; then
 	notify-send -u critical "Battery" "Running low on battery :("
     fi
