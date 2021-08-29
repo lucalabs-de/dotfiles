@@ -5,6 +5,7 @@ xrdb ~/.Xresources
 THEME=$(shuf -n1 -e ~/.themes/*)
 THEMENAME=$(echo $THEME | sed "s@.*/@@")
 xrdb -merge "$THEME/colors"
+echo "$THEME" > "$HOME/.currenttheme"
 
 # load theme colors
 FOREGROUND=$(xrdb -query | grep 'foreground:'| awk '{print $NF}')
@@ -70,17 +71,17 @@ dunst \
     -nb "$BACKGROUND" -nf "$FOREGROUND" -nfr "$WARN" \
     -cb "$BACKGROUND" -cf "$FOREGROUND" -cfr "$ALERT" &
 
-sleep 1.5
-notify-send "bspwm loaded" "with theme $THEMENAME"
-
 # wifi info & time
-sleep 0.3
+sleep 0.2
 conky -c "$HOME/.config/conky/conky-wifi.conf" &
-sleep 0.3
+sleep 0.2
 conky -c "$HOME/.config/conky/conky-clock-2.conf" &
-sleep 0.3
+sleep 0.2
 conky -c "$HOME/.config/conky/conky-clock-3.conf" &
-sleep 0.3
+sleep 0.2
 conky -c "$HOME/.config/conky/conky-clock.conf" &
+
+sleep 1
+notify-send "bspwm loaded" "with theme $THEMENAME" -u low
 
 
