@@ -46,7 +46,7 @@
 
 ;; temp files
 (setq auto-save-file-name-transforms
-          `((".*" ,(concat user-emacs-directory "auto-save/") t))) 
+          `((".*" ,(concat user-emacs-directory "auto-save") t))) 
 
 (setq backup-directory-alist
       `(("." . ,(expand-file-name
@@ -141,8 +141,8 @@
 (use-package kotlin-mode 
   :ensure t
   :init
-  (setenv "ANDROID_HOME" "/home/lucalabs/Android/Sdk") 
-  (setenv "ANDROID_SDK_ROOT" "/home/lucalabs/Android/Sdk")
+  (setenv "ANDROID_HOME" "/home/lucalabs/android") 
+  (setenv "ANDROID_SDK_ROOT" "/home/lucalabs/android")
   :config
   (setq kotlin-tab-width 2)
   :hook (kotlin-mode . lsp-deferred))
