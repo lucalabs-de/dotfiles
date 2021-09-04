@@ -30,4 +30,9 @@ export PATH="$PATH:$ANDROID_HOME/platform-tools/"
 # Dotfiles Repo
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
+# Set DBUS address for cron
+env | grep DBUS_SESSION_BUS_ADDRESS > $HOME/.dbus/Xdbus
+chmod 600 $HOME/.dbus/Xdbus
+echo 'export DBUS_SESSION_BUS_ADDRESS' >> $HOME/.dbus/Xdbus
+
 

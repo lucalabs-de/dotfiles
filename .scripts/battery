@@ -1,9 +1,11 @@
 #!/bin/bash
 
-if [ $(cat /sys/class/power_supply/BAT1/capacity) -lt 10 ]; then
-    if [ $DISPLAY ]; then
-	notify-send -u critical "Battery" "Running low on battery :("
-    fi
+if [ -r "$HOME/.dbus/Xdbus" ]; then
+  . "$HOME/.dbus/Xdbus"
+fi
+
+if [ $(cat /sys/class/power_supply/BAT1/capacity) -lt 100 ] && [[ $(cat /sys/class/power_supply/BAT1/status) == "Discharging" ]]; then
+    /bin/notify-send -u critical "Battery" "Running low on battery :("
 fi
 
     
