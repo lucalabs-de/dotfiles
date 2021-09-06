@@ -245,4 +245,40 @@
     :defer t
     :config)
 
+;; TeX
+(use-package tex
+  :ensure auctex
+  :hook (tex . (lambda () (TeX-fold-mode 1)))
+  :config
+  (setq-default TeX-master nil)
+  (setq TeX-parse-self t)
+  (setq TeX-auto-save t)
+  (setq TeX-PDF-mode t)
+  (setq TeX-view-program-selection '((output-pdf "Zathura"))
+      TeX-source-correlate-start-server t))
 
+;; Orgmode
+(defun org-mode-setup ()
+  (org-indent-mode)
+  (visual-line-mode 1)
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+
+(use-package org
+  :ensure t
+  :hook (org-mode . org-mode-setup)
+  :config
+  (setq org-hide-emphasis-markers t)
+  (setq org-ellipsis " ▾")
+  (setq org-todo-keywords
+	'((sequence "TODO" "ACTIVE" "DONE")))
+  (setq org-todo-keyword-faces
+ '(("ACTIVE" . "magenta"))))
+
+(use-package org-bullets
+  :ensure t
+  :after org
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
