@@ -55,7 +55,7 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{j,k,l,;}
+super + {_,shift + }{j,k,l,odiaeresis}
 	bspc node -{f,s} {west,south,north,east}
 
 # focus the node for the given path jump
@@ -119,3 +119,31 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#
+# volume
+#
+
+# increase volume
+super + F12
+      	amixer set Master 3%+
+
+# lower volume
+super + F11
+  	amixer set Master 3%-
+
+# toggle mute
+super + F10
+      amixer set Master toggle
+
+#
+# brightness
+#
+
+# increase brightness
+super + F6
+      xbacklight -inc 5
+
+# decrease brightness
+super + F5
+      xbacklight -dec 5
