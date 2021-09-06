@@ -51,6 +51,9 @@ bspc rule --add URxvt:scratchpad sticky=on state=floating border=off
 # load wallpaper according to theme
 feh --bg-fill "$THEME/wallpaper.png"
 
+# setup zathura config
+. $HOME/.config/zathura/zathura.template
+
 # load neofetch config according to theme
 if [ -e "$THEME/neofetch" ]
 then

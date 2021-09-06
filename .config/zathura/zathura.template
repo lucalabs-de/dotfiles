@@ -1,0 +1,27 @@
+#!/bin/bash
+
+FOREGROUND=$(xrdb -query | grep 'foreground:'| awk '{print $NF}')
+BACKGROUND=$(xrdb -query | grep 'background:'| awk '{print $NF}')
+BACKGROUNDALT=$(xrdb -query | grep 'backgroundAlt:'| awk '{print $NF}')
+ALERT=$(xrdb -query | grep 'alert:'| awk '{print $NF}')
+ALERTALT=$(xrdb -query | grep 'alertAlt:'| awk '{print $NF}')
+WARN=$(xrdb -query | grep 'warn:'| awk '{print $NF}')
+HIGHLIGHT=$(xrdb -query | grep 'highlight:'| awk '{print $NF}')
+HIGHLIGHTALT=$(xrdb -query | grep 'highlightAlt:'| awk '{print $NF}')
+HIGHLIGHTFOREGROUND=$(xrdb -query | grep 'highlightForeground:'| awk '{print $NF}')
+
+FILE="$HOME/.config/zathura/zathurarc"
+
+echo "set recolor true" > $FILE
+echo "set default-bg '$BACKGROUND'" >> $FILE
+echo "set default-fg '$FOREGROUND'" >> $FILE
+echo "set recolor-lightcolor '$BACKGROUND'" >> $FILE
+echo "set recolor-darkcolor '$FOREGROUND'" >> $FILE
+echo "set statusbar-bg '$BACKGROUND'" >> $FILE
+echo "set statusbar-fg '$FOREGROUND'" >> $FILE
+echo "set inputbar-bg '$BACKGROUND'" >> $FILE
+echo "set inputbar-fg '$FOREGROUND'" >> $FILE
+echo "set font 'Fantasque Sans Mono normal 12'" >> $FILE
+echo "map <A-\<> goto top" >> $FILE
+echo "map <A-\>> goto bottom" >> $FILE
+
