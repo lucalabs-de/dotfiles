@@ -26,7 +26,8 @@ rofi -show drun \
      -columns 3 \
      -color-enabled true \
      -color-window "$BACKGROUND,$HIGHLIGHTALT,$BACKGROUND" \
-     -color-normal "$BACKGROUND,$FOREGROUND,$BACKGROUND,$HIGHLIGHT,$HIGHLIGHTFOREGROUND" 
+     -color-normal "$BACKGROUND,$FOREGROUND,$BACKGROUND,$HIGHLIGHT,$HIGHLIGHTFOREGROUND" \
+     -theme-str 'element { highlight: bold; }'
 
 
 
