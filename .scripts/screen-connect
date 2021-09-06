@@ -1,18 +1,23 @@
 #!/bin/bash
 
 # the screen we want to connect to
-NEW_SCREEN="DP1"
-RESOLUTION="3440x1440"
+NEW_SCREEN="DP-1"
+RESOLUTION="3440x1440_48.00"
 
-OLD_SCREEN=eDP1
+OLD_SCREEN="eDP-1"
 
+# connect screen
 xrandr --output "$NEW_SCREEN" --right-of "$OLD_SCREEN" --mode "$RESOLUTION"
 
+# fix bspwm desktops
+bspc monitor "$NEW_SCREEN" -d 1 3 5 7 9
+bspc monitor "$OLD_SCREEN" -d 2 4 6 8 0
+
 # kill previous instances of conky
-wifipid=$(cat /tmp/conkywifi.pid) || 1
-clock1pid=$(cat /tmp/conkyclock1.pid) || 1
-clock2pid=$(cat /tmp/conkyclock2.pid) || 1
-clock3pid=$(cat /tmp/conkyclock3.pid) || 1
+wifipid=$(cat /tmp/conkywifi.pid 2> /dev/null) || "1"
+clock1pid=$(cat /tmp/conkyclock1.pid 2> /dev/null) || "1"
+clock2pid=$(cat /tmp/conkyclock2.pid 2> /dev/null) || "1"
+clock3pid=$(cat /tmp/conkyclock3.pid 2> /dev/null) || "1"
 
 if [ "$(ps -o comm= -p "$wifipid")" = "conky" ]; then
     echo "killed $wifipid"
