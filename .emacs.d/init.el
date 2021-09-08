@@ -36,7 +36,7 @@
 
 ;; setup fonts
 (set-face-attribute 'default nil
-		    :family "Fantasque Sans Mono"
+		    :family "FantasqueSansMonoNerdFontAAE Nerd Font Mono" ; nerd-patched Fantasque Sans Mono
 		    :height 160
 		    :weight 'normal
 		    :width 'normal)
@@ -274,7 +274,9 @@
   (setq org-todo-keywords
 	'((sequence "TODO" "ACTIVE" "DONE")))
   (setq org-todo-keyword-faces
- '(("ACTIVE" . "magenta"))))
+	'(("ACTIVE" . "magenta")))
+  (setq org-format-latex-options
+	(plist-put org-format-latex-options :scale 2.0)))
 
 (use-package org-bullets
   :ensure t
