@@ -14,28 +14,24 @@ bspc monitor "$NEW_SCREEN" -d 1 3 5 7 9
 bspc monitor "$OLD_SCREEN" -d 2 4 6 8 0
 
 # kill previous instances of conky
-wifipid=$(cat /tmp/conkywifi.pid 2> /dev/null) || "1"
-clock1pid=$(cat /tmp/conkyclock1.pid 2> /dev/null) || "1"
-clock2pid=$(cat /tmp/conkyclock2.pid 2> /dev/null) || "1"
-clock3pid=$(cat /tmp/conkyclock3.pid 2> /dev/null) || "1"
+wifipid=$(cat /tmp/conkywifi.pid 2> /dev/null || echo "1") 
+clock1pid=$(cat /tmp/conkyclock1.pid 2> /dev/null || echo "1")
+clock2pid=$(cat /tmp/conkyclock2.pid 2> /dev/null || echo "1")
+clock3pid=$(cat /tmp/conkyclock3.pid 2> /dev/null || echo "1") 
 
 if [ "$(ps -o comm= -p "$wifipid")" = "conky" ]; then
-    echo "killed $wifipid"
     kill -9 "$wifipid"
 fi
 
 if [ "$(ps -o comm= -p "$clock1pid")" = "conky" ]; then
-    echo "killede $clock1pid"
     kill -9 "$clock1pid"
 fi
 
 if [ "$(ps -o comm= -p "$clock2pid")" = "conky" ]; then
-    echo "killed $clock2pid"
     kill -9 "$clock2pid"
 fi
 
 if [ "$(ps -o comm= -p "$clock3pid")" = "conky" ]; then
-    echo "killed $clock3pid"
     kill -9 "$clock3pid"
 fi
 
