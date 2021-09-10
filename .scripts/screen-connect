@@ -6,6 +6,11 @@ RESOLUTION="3440x1440_48.00"
 
 OLD_SCREEN="eDP-1"
 
+if ! [ "$(xrandr -q | grep "^$NEW_SCREEN connected")" ]; then
+    echo "$NEW_SCREEN not connected"
+    exit 1
+fi
+
 # connect screen
 xrandr --output "$NEW_SCREEN" --right-of "$OLD_SCREEN" --mode "$RESOLUTION"
 
@@ -47,3 +52,5 @@ disown $(cat /tmp/conkyclock2.pid)
 
 conky -c "$HOME/.config/conky/conky-clock-3.conf" -x $((1920+60)) -y 180 &>/dev/null & echo $! > /tmp/conkyclock3.pid
 disown $(cat /tmp/conkyclock3.pid)
+
+echo "Connected to $NEW_SCREEN"
