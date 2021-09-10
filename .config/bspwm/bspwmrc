@@ -7,6 +7,9 @@ THEMENAME=$(echo $THEME | sed "s@.*/@@")
 xrdb -merge "$THEME/colors"
 echo "$THEME" > "$HOME/.currenttheme"
 
+# fill config templates with theme colors
+. $HOME/.scripts/setup-configs
+
 # load theme colors
 FOREGROUND=$(xrdb -query | grep 'foreground:'| awk '{print $NF}')
 BACKGROUND=$(xrdb -query | grep 'background:'| awk '{print $NF}')
@@ -48,14 +51,11 @@ bspc config pointer_action1  move
 bspc config pointer_action2  resize_corner
 
 bspc rule --add URxvt:ncmpcpp state=floating
-bspc rule --add URxvt:scratchpad sticky=on state=floating border=off
+bspc rule --add Zathura       state=tiled
 
 ## Autostart ##
 # load wallpaper according to theme
 feh --bg-fill "$THEME/wallpaper.png"
-
-# setup zathura config
-. $HOME/.config/zathura/zathura.template
 
 # load neofetch config according to theme
 if [ -e "$THEME/neofetch" ]
@@ -93,8 +93,14 @@ conky -c "$HOME/.config/conky/conky-clock.conf" &
 sleep 1
 notify-send "bspwm loaded" "with theme $THEMENAME" -u low
 
+sleep 1
+
+# Try to connect to external screen (also starts conky on that screen)
+. $HOME/.scripts/screen-connect 
+
+
 # setup audio & visualization
-mopidy &
+#mopidy &
 
 
 
