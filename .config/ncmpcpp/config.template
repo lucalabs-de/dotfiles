@@ -67,8 +67,8 @@ progressbar_look = "━━━"
 #progressbar_look = "•••"
 #progressbar_look = "---"
 #progressbar_look = "─●"
-progressbar_elapsed_color = 215
-progressbar_color = 234
+progressbar_elapsed_color = #256:highlight#
+progressbar_color = #256:background#
 
 # UI VISIBILITY
 header_visibility = "no"
@@ -82,9 +82,9 @@ color1 = "white"
 color2 = "blue"
 
 # UI FORMAT
-now_playing_prefix = "$b$(215)$9"
+now_playing_prefix = "$b$(#256:highlight#)$9"
 now_playing_suffix = "$/b"
-current_item_prefix = "$(234_222)"
+current_item_prefix = "$(#256:highlightForeground#_#256:highlightAlt#)"
 current_item_suffix = "$(end)"
 #now_playing_prefix = " $b$6$2$7"
 #now_playing_suffix = "$/b"
@@ -94,6 +94,6 @@ song_columns_list_format = "(3f)[]{} (60)[default]{t|f} (35)[default]{ar}"
 
 song_list_format = "{%t $R$6  $8%a$8}|{%f $R$6  $8%l$8}$8"
 
-song_status_format = "{$b$(248) $8%a $(248) $(222)%t}|{$b$(161) $(215)%f}"
+song_status_format = "{$b$(#256:foreground#) $8%a $(#256:foreground#) $(#256:highlightAlt#)%t}|{$b$(#256:alert#) $(#256:highlight#)%f}"
 
 song_window_title_format = "{%a - %t}|{%f}"

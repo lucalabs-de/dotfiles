@@ -1,0 +1,119 @@
+#!/bin/bash
+
+TEMPLATE_FILE=$1
+OUTPUT_FILE=$2
+
+get_rgb_from_x () {
+    local xkey=$1
+    rgb=$(xrdb -query | grep "$xkey:"| awk '{print $NF}') 
+}
+
+get_tc_from_x () {
+    get_rgb_from_x "$1"
+    get_colors_from_rgb "$rgb"
+    tcprefix="\x1b[38;2;${r};${g};${b}m"
+}
+
+# based on tmux implementation
+get_ansi_from_x () {
+    get_rgb_from_x "$1"
+    get_colors_from_rgb "$rgb"
+
+    local q2c=(0 95 135 175 215 255)
+
+    # map rgb to 6x6x6 cube
+    color_to_6cube "$r"; local cr=${q2c[$c6]}; local qr=$c6
+    color_to_6cube "$g"; local cg=${q2c[$c6]}; local qg=$c6
+    color_to_6cube "$b"; local cb=${q2c[$c6]}; local qb=$c6
+
+    # return early if we hit the exact color
+    if [ $cr == $r ] && [ $cg == $g ] && [ $cb == $b]; then
+	ansi=$(( (16+ (36 * $qr) + (6 * $qg) + $qb) ))
+	return 0
+    fi
+
+    # work out the closest grey
+    grey_avg=$(( ($r+$g+$b) / 3 ))
+
+    local grey_idx=0
+    if [ $grey_avg -gt 238 ]; then
+	grey_idx=23
+    else
+	grey_idx=$(( ($grey_avg - 3) / 10 ))
+    fi
+
+    local grey=$(( 8 + (10 * $grey_idx) ))
+
+    # is grey or 6x6x6 color closest?
+    color_dist_sq "$cr" "$cg" "$cb" "$r" "$g" "$b"; local d=$dist
+    color_dist_sq "$grey" "$grey" "$grey" "$r" "$g" "$b"
+
+    if [ $dist -lt $d ]; then
+	ansi=$((232 + $grey_idx))
+    else
+	ansi=$(( 16 + (36 * $qr) + (6 * $qg) + $qb ))
+    fi
+}
+
+get_colors_from_rgb () {
+    local srgb=$1
+    local rh=${srgb:1:2}
+    local gh=${srgb:3:2}
+    local bh=${srgb:5:2}
+    r=$((16#$rh))
+    g=$((16#$gh))
+    b=$((16#$bh))
+}
+
+color_to_6cube () {
+    if [ $1 -lt 48 ]; then
+	c6=0
+    elif [ $1 -lt 114 ]; then
+	c6=1
+    else
+	c6=$(( ($1 - 35) / 40 ))
+    fi
+}
+
+color_dist_sq () {
+    dist=$(( ($1-$4)*($1-$4) + ($2-$5)*($2-$5) + ($3-$6)*($3-$6) ))
+}
+
+cat $TEMPLATE_FILE > $OUTPUT_FILE
+
+rgb_regex="#RGB:(\w+)#"
+tc_regex="#TC:(\w+) (.*) #CT"
+ansi_regex="#256:(\w+)#"
+
+cat $OUTPUT_FILE | while read -r line; do
+    ## replace with rgb (template strings of form #RGB:<key>#)
+    echo $line | grep -Po "$rgb_regex" | while read match; do
+	[[ $match =~ $rgb_regex ]]
+	key=${BASH_REMATCH[1]}
+
+	get_rgb_from_x "$key"
+	
+	perl -ne "s/$match/$rgb/g; print;" -i $OUTPUT_FILE
+    done
+
+    ## replace with TrueColor escape codes (template strings of form #TC:<key> [text] #CT)
+    echo $line | grep -Po "$tc_regex" | while read match; do
+	[[ $match =~ $tc_regex ]]
+	key=${BASH_REMATCH[1]}
+	text=${BASH_REMATCH[2]}
+
+	get_tc_from_x "$key"
+
+	perl -ne "s/$match/$tcprefix$text\\x1b[0m/g; print;" -i $OUTPUT_FILE
+    done
+
+    ## replace with closest 256-color equivalent (#256:<key>#)
+    echo $line | grep -Po "$ansi_regex" | while read match; do
+	[[ $match =~ $ansi_regex ]]
+	key=${BASH_REMATCH[1]}
+
+	get_ansi_from_x "$key"
+
+	perl -ne "s/$match/$ansi/g; print;" -i $OUTPUT_FILE
+    done
+done

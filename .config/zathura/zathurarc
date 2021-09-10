@@ -10,3 +10,6 @@ set inputbar-fg '#a8afa5'
 set font 'Fantasque Sans Mono normal 12'
 map <A-\<> goto top
 map <A-\>> goto bottom
+map <C-n> scroll down
+map <C-p> scroll up
+
