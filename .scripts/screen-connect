@@ -15,7 +15,8 @@ fi
 xrandr --output "$NEW_SCREEN" --right-of "$OLD_SCREEN" --mode "$RESOLUTION"
 
 # fix wallpaper
-if [ -f WALLPAPER=$(cat "$HOME/.currentbg") ]; then
+if [ -f "$HOME/.currentbg" ]; then
+    WALLPAPER=$(cat "$HOME/.currentbg")
     feh --bg-fill "$WALLPAPER"
 fi
 
@@ -59,3 +60,5 @@ conky -c "$HOME/.config/conky/conky-clock-3.conf" -x $((1920+60)) -y 180 &>/dev/
 disown $(cat /tmp/conkyclock3.pid)
 
 echo "Connected to $NEW_SCREEN"
+
+
