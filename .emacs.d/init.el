@@ -31,8 +31,20 @@
 ;; add top breathing room
 (setq scroll-margin 6) 
 
-;; load gruvbox theme
-(load-theme 'gruvbox t)
+;; load theme according to system theme
+(use-package load-env-vars
+  :ensure t
+  :config
+  (load-env-vars "~/.currentenv")
+  (if (locate-file (concat (getenv "EMACSTHEME") "-theme.el") custom-theme-load-path '("" "c"))
+      (eval (car (read-from-string (format "(load-theme '%s t)" (getenv "EMACSTHEME")))))
+      (load-theme 'gruvbox t)))
+  
+
+  ;; (if (intern-soft (getenv "EMACSTHEME"))
+  ;;   (load-theme (intern-soft (getenv "EMACSTHEME")) t)
+  ;;   (load-theme 'gruvbox t)))
+
 
 ;; setup fonts
 (set-face-attribute 'default nil
@@ -284,3 +296,15 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auth-source-save-behavior nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

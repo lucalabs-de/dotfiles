@@ -1,3 +1,0 @@
-#!/bin/bash
-
-export LS_COLORS="$LS_COLORS:ex=01;36"

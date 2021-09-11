@@ -14,6 +14,11 @@ fi
 # connect screen
 xrandr --output "$NEW_SCREEN" --right-of "$OLD_SCREEN" --mode "$RESOLUTION"
 
+# fix wallpaper
+if [ -f WALLPAPER=$(cat "$HOME/.currentbg") ]; then
+    feh --bg-fill "$WALLPAPER"
+fi
+
 # fix bspwm desktops
 bspc monitor "$NEW_SCREEN" -d 1 3 5 7 9
 bspc monitor "$OLD_SCREEN" -d 2 4 6 8 0
