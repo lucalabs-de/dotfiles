@@ -126,15 +126,15 @@ super + {Left,Down,Up,Right}
 
 # increase volume
 super + F12
-      	amixer set Master 3%+
+      	pamixer -i 5
 
 # lower volume
 super + F11
-  	amixer set Master 3%-
+  	pamixer -d 5
 
 # toggle mute
 super + F10
-      amixer set Master toggle
+      	pamixer -t
 
 #
 # brightness
