@@ -16,8 +16,18 @@ get_tc_from_x () {
 
 # based on tmux implementation
 get_ansi_from_x () {
-    get_rgb_from_x "$1"
-    get_colors_from_rgb "$rgb"
+    get_rgb_from_x "$1"; local irgb=$rgb
+
+    # check if color is already defined in 0-15
+    for i in {0..15}; do
+	get_rgb_from_x "color$i"
+	if [ "$rgb" = "$irgb" ]; then
+	   ansi=$i
+	   return 0
+	fi
+    done
+    
+    get_colors_from_rgb "$irgb"
 
     local q2c=(0 95 135 175 215 255)
 
@@ -79,41 +89,54 @@ color_dist_sq () {
     dist=$(( ($1-$4)*($1-$4) + ($2-$5)*($2-$5) + ($3-$6)*($3-$6) ))
 }
 
-cat $TEMPLATE_FILE > $OUTPUT_FILE
+echo "" > $OUTPUT_FILE
 
 rgb_regex="#RGB:(\w+)#"
 tc_regex="#TC:(\w+) (.*) #CT"
 ansi_regex="#256:(\w+)#"
 
-cat $OUTPUT_FILE | while read -r line; do
+control_regex="#\w{2,3}:\w+"
+
+cat $TEMPLATE_FILE | while read -r line; do
+    # skip if the current line does not contain template strings
+    [[ $line =~ $control_regex ]] || echo $line >> $OUTPUT_FILE; continue
+    
     ## replace with rgb (template strings of form #RGB:<key>#)
-    echo $line | grep -Po "$rgb_regex" | while read match; do
+    while read match; do
+	[ -z $match ] && continue
+	
 	[[ $match =~ $rgb_regex ]]
 	key=${BASH_REMATCH[1]}
 
 	get_rgb_from_x "$key"
-	
-	perl -ne "s/$match/$rgb/g; print;" -i $OUTPUT_FILE
-    done
+
+	line=$(echo $line | sed "s/$match/$rgb/g")
+    done <<< $(echo $line | grep -Po "$rgb_regex")
 
     ## replace with TrueColor escape codes (template strings of form #TC:<key> [text] #CT)
-    echo $line | grep -Po "$tc_regex" | while read match; do
+    while read match; do
+	[ -z $match ] && continue
+	
 	[[ $match =~ $tc_regex ]]
 	key=${BASH_REMATCH[1]}
 	text=${BASH_REMATCH[2]}
 
 	get_tc_from_x "$key"
 
-	perl -ne "s/$match/$tcprefix$text\\x1b[0m/g; print;" -i $OUTPUT_FILE
-    done
+	line=$(echo $line | sed "s/$match/$tcprefix$text\\x1b[0m/g")
+    done <<< $(echo $line | grep -Po "$tc_regex")
 
     ## replace with closest 256-color equivalent (#256:<key>#)
-    echo $line | grep -Po "$ansi_regex" | while read match; do
+    while read match; do
+	[ -z $match ] && continue
+	
 	[[ $match =~ $ansi_regex ]]
 	key=${BASH_REMATCH[1]}
 
 	get_ansi_from_x "$key"
 
-	perl -ne "s/$match/$ansi/g; print;" -i $OUTPUT_FILE
-    done
+	line=$(echo $line | sed "s/$match/$ansi/g")
+    done <<< $(echo $line | grep -Po "$ansi_regex")
+
+    echo $line >> $OUTPUT_FILE
 done
