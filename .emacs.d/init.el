@@ -254,14 +254,14 @@
 ;; TeX
 (use-package tex
   :ensure auctex
-  :hook (tex . (lambda () (TeX-fold-mode 1)))
+  :hook (tex . (TeX-fold-mode))
   :config
   (setq-default TeX-master nil)
   (setq TeX-parse-self t)
   (setq TeX-auto-save t)
   (setq TeX-PDF-mode t)
   (setq TeX-view-program-selection '((output-pdf "Zathura"))
-      TeX-source-correlate-start-server t))
+	TeX-source-correlate-start-server t))
 
 ;; Orgmode
 (defun org-mode-setup ()
@@ -282,7 +282,8 @@
   (setq org-todo-keyword-faces
 	'(("ACTIVE" . "magenta")))
   (setq org-format-latex-options
-	(plist-put org-format-latex-options :scale 2.0)))
+	(plist-put org-format-latex-options :scale 2.0))
+  (setup-orgmode-export))
 
 (use-package org-bullets
   :ensure t
@@ -291,3 +292,25 @@
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
+;; Orgmode TeX outlining
+(defun setup-orgmode-export ()
+  (setq org-latex-default-class "org-article")
+  (setq org-export-with-toc nil)
+  (setq org-export-with-creator nil)
+  (setq org-export-with-author nil)
+  (setq org-export-with-title nil)
+  (setq org-export-with-date nil)
+  (setq org-latex-with-hyperref nil))
+
+(with-eval-after-load 'ox-latex 
+    (add-to-list 'org-latex-classes
+		 '("org-article"
+		   "\\include{preamble}
+                [NO-PACKAGES]
+                [NO-DEFAULT-PACKAGES]
+                [NO-EXTRA]"
+		   ("\\section{%s}" . "\\section*{%s}")
+		   ("\\subsection{%s}" . "\\subsection*{%s}")
+		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
