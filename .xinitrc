@@ -38,8 +38,12 @@ then
 fi
 
 # launch all the things
+mkdir /tmp/user
+mkdir /tmp/user/$(id -u)
+export XDG_RUNTIME_DIR="/tmp/user/$(id -u)"
 
 pipewire-pulse & # audio
+pipewire &
 setxkbmap -layout de & # keymap
 sxhkd & # keybinds
 exec bspwm
