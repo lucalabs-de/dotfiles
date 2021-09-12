@@ -39,12 +39,6 @@
   (if (locate-file (concat (getenv "EMACSTHEME") "-theme.el") custom-theme-load-path '("" "c"))
       (eval (car (read-from-string (format "(load-theme '%s t)" (getenv "EMACSTHEME")))))
       (load-theme 'gruvbox t)))
-  
-
-  ;; (if (intern-soft (getenv "EMACSTHEME"))
-  ;;   (load-theme (intern-soft (getenv "EMACSTHEME")) t)
-  ;;   (load-theme 'gruvbox t)))
-
 
 ;; setup fonts
 (set-face-attribute 'default nil
