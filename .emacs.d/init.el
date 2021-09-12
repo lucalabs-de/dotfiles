@@ -175,7 +175,7 @@
 (use-package eslintd-fix
   :ensure t
   :init
-  (setq eslintd-fix-executable "/usr/bin/eslint_d")
+  (setq eslintd-fix-executable "/home/lucalabs/n/bin/eslint_d")
   (setq eslintd-fix-portfile "~/.eslint_d")
   :hook (js-mode . eslintd-fix-mode)
         (typescript-mode . eslintd-fix-mode)
@@ -185,11 +185,11 @@
 ; Unfortunately no package for this yet, so this has to do
 (defun ktlint-fix-file ()
   (interactive)
-  (shell-command (concat "ktlint -F " (buffer-file-name)))) ; requires ktlint to be installed and in path
+  (shell-command (concat "ktlint -F " (file-name-nondirectory (buffer-file-name))))) ; requires ktlint to be installed and in path
 
 (defun ktlint-fix-file-and-revert ()
   (interactive)
-  (message "ktlint fixing file" (buffer-file-name))
+  (message (concat "ktlint fixing file " (file-name-nondirectory (buffer-file-name))))
   (ktlint-fix-file)
   (revert-buffer t t))
 
@@ -296,15 +296,4 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auth-source-save-behavior nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
