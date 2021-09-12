@@ -113,8 +113,8 @@ cat $TEMPLATE_FILE | while read -r line; do
 
 	get_rgb_from_x "$key"
 
-	line=$(echo $line | sed "s/$match/$rgb/g")
-    done <<< $(echo $line | grep -Po "$rgb_regex")
+	line=$(echo "$line" | sed "s/$match/$rgb/g")
+    done <<< $(echo "$line" | grep -Po "$rgb_regex")
 
     ## replace with TrueColor escape codes (template strings of form #TC:<key> [text] #CT)
     while read match; do
@@ -126,8 +126,8 @@ cat $TEMPLATE_FILE | while read -r line; do
 
 	get_tc_from_x "$key"
 
-	line=$(echo $line | sed "s/$match/$tcprefix$text\\x1b[0m/g")
-    done <<< $(echo $line | grep -Po "$tc_regex")
+	line=$(echo "$line" | sed "s/$match/$tcprefix$text\\x1b[0m/g")
+    done <<< $(echo "$line" | grep -Po "$tc_regex")
 
     ## replace with closest 256-color equivalent (#256:<key>#)
     while read match; do
@@ -138,8 +138,8 @@ cat $TEMPLATE_FILE | while read -r line; do
 
 	get_ansi_from_x "$key"
 
-	line=$(echo $line | sed "s/$match/$ansi/g")
-    done <<< $(echo $line | grep -Po "$ansi_regex")
+	line=$(echo "$line" | sed "s/$match/$ansi/g")
+    done <<< $(echo "$line" | grep -Po "$ansi_regex")
 
     echo $line >> $OUTPUT_FILE
 done
