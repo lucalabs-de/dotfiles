@@ -52,9 +52,10 @@ bspc config pointer_modifier mod4
 bspc config pointer_action1  move
 bspc config pointer_action2  resize_corner
 
-bspc rule --add URxvt:ncmpcpp state=floating
-bspc rule --add Zathura       state=tiled
-bspc rule --add feh           state=floating
+bspc rule --add URxvt:ncmpcpp   state=floating
+bspc rule --add Zathura         state=tiled
+bspc rule --add feh             state=floating
+bspc rule --add Firefox:Toolkit state=floating #picture-in-picture
 
 ## Autostart ##
 # load wallpaper according to theme
