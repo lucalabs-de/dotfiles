@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# This script replaces color placeholders by their Xresources equivalents
+#
+#
+
 TEMPLATE_FILE=$1
 OUTPUT_FILE=$2
 
@@ -22,8 +26,8 @@ get_ansi_from_x () {
     for i in {0..15}; do
 	get_rgb_from_x "color$i"
 	if [ "$rgb" = "$irgb" ]; then
-	   ansi=$i
-	   return 0
+	    ansi=$i
+	    return 0
 	fi
     done
     
@@ -93,9 +97,9 @@ echo "" > $OUTPUT_FILE
 
 rgb_regex="#RGB:(\w+)#"
 tc_regex="#TC:(\w+) (.*) #CT"
-ansi_regex="#256:(\w+)#"
+ansi_regex="#256(\+([0-9]+))?:(\w+)#"
 
-control_regex="#\w{2,3}:\w+"
+control_regex="#\w{2,3}(\+[0-9]+)?:\w+"
 
 cat $TEMPLATE_FILE | while read -r line; do
     # skip if the current line does not contain template strings
@@ -134,9 +138,18 @@ cat $TEMPLATE_FILE | while read -r line; do
 	[ -z $match ] && continue
 	
 	[[ $match =~ $ansi_regex ]]
-	key=${BASH_REMATCH[1]}
+	offset=${BASH_REMATCH[2]}
+	key=${BASH_REMATCH[3]}
+
+	echo "key is $key"
+	echo "offset is $offset"
 
 	get_ansi_from_x "$key"
+
+	if ! [ -z $offset ]; then
+	    echo "adding offset ${offset}"
+	    ansi=$(( $ansi + $offset ))
+	fi
 
 	line=$(echo "$line" | sed "s/$match/$ansi/g")
     done <<< $(echo "$line" | grep -Po "$ansi_regex")
