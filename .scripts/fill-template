@@ -141,13 +141,9 @@ cat $TEMPLATE_FILE | while read -r line; do
 	offset=${BASH_REMATCH[2]}
 	key=${BASH_REMATCH[3]}
 
-	echo "key is $key"
-	echo "offset is $offset"
-
 	get_ansi_from_x "$key"
 
 	if ! [ -z $offset ]; then
-	    echo "adding offset ${offset}"
 	    ansi=$(( $ansi + $offset ))
 	fi
 
