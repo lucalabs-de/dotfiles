@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+    <title>/home/fun</title>
+    <style>
+      html {
+	  height: 100%;
+      }
+      
+      body {
+          display: flex;
+          height: 100%;
+	  width: 100%;
+          align-items: center;
+          justify-content: center;
+	  flex-direction: column;
+          margin: 0;
+          background-color: #RGB:background#;
+          color: #RGB:foreground#;
+      }
+      
+      h1 {
+          font-size: 4em;
+          margin-top: -12px;
+          margin-bottom: 12px;
+          text-align: center;
+      }
+      
+      h1 .fire {
+          background-image: linear-gradient(65deg, #RGB:color1#, #RGB:color3#);
+          background-size: 100%;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
+      
+      input {
+          height: 28px;
+          border-radius: 6px;
+          color: #RGB:foreground#;
+          background-color: #00000033;
+          border: none;
+          text-align: center;
+      }
+    </style>
+    <script>
+      const quotes = [
+	["Imagination is more important than knowledge.", "Albert Einstein"],
+	["Although greed is considered one of the seven deadly sins, it turns out that greedy algorithms often perform quite well."],
+	["Discoveries come in many different ways, and the most important thing is to be ready for them."],
+	["Science is supposedly the method by which we stand on the shoulders of those who came before us. In computer science, we all are standing on each others' feet"],
+	["There are two difficult things in computer science: cache invalidation, naming things, and off-by-one errors"]
+      ]
+    </script>
+  </head>
+  
+  <body>
+    <h1><a class="fire">fire</a>fox</h1>
+    <form action="https://duckduckgo.com/" method="GET">
+      <input autofocus name="q" type="search" placeholder="search with ddg" autofocus>
+    </form>
+  </body>
+  
+</html>

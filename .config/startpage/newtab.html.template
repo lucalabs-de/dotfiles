@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>  
+  <head>
+    <title>new tab</title>
+    <style>
+      html {
+	  height: 100%;
+      }
+      
+      body {
+          display: flex;
+          height: 100%;
+	  width: 100%;
+          align-items: center;
+          justify-content: center;
+	  flex-direction: column;
+          margin: 0;
+          background-color: #RGB:background#;
+          color: #RGB:foreground#;
+      }
+      
+      h1 {
+          font-size: 4em;
+          margin-top: -12px;
+          margin-bottom: 12px;
+          text-align: center;
+      }
+      
+      h1 .fire {
+          background-image: linear-gradient(65deg, #RGB:color1#, #RGB:color3#);
+          background-size: 100%;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+      }
+      
+      input {
+          height: 28px;
+          border-radius: 6px;
+          color: #RGB:foreground#;
+          background-color: #00000033;
+          border: none;
+          text-align: center;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <h1><a class="fire">fire</a>fox</h1>
+    <form action="https://duckduckgo.com/" method="GET">
+      <input autofocus name="q" type="search" placeholder="search with ddg" autofocus>
+    </form>
+  </body>
+  
+</html>
