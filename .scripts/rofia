@@ -25,8 +25,8 @@ rofi -show drun \
      -font "Fantasque Sans Mono 12" \
      -columns 3 \
      -color-enabled true \
-     -color-window "$BACKGROUND,$HIGHLIGHTALT,$BACKGROUND" \
-     -color-normal "$BACKGROUND,$FOREGROUND,$BACKGROUND,$HIGHLIGHT,$HIGHLIGHTFOREGROUND" \
+     -color-window "$BACKGROUND,$HIGHLIGHT,$BACKGROUND" \
+     -color-normal "$BACKGROUND,$FOREGROUND,$BACKGROUND,$HIGHLIGHTALT,$HIGHLIGHTFOREGROUND" \
      -theme-str 'element { highlight: bold; }'
 
 
