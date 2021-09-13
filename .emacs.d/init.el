@@ -100,7 +100,8 @@
   (setq dashboard-banner-logo-title "Welcome back <3")
   (setq dashboard-footer-messages '("Happy coding!"
 				    "I showed you my source code, pls respond"
-				    "A monad is just a monoid in the category of endofunctors, what's the problem?")))
+				    "A monad is just a monoid in the category of endofunctors, what's the problem?"
+				    "(λxy.y(xxy)(λxy.y(xxy))")))
 
 ;; Discovery
 (use-package which-key
