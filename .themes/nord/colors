@@ -24,13 +24,14 @@
 *.background: 	nord1
 *.cursorColor:	nord4 
 
-*.backgroundAlt: nord0
-*.alert: 	 nord11
-*.alertAlt:	 nord12 
-*.warn:		 nord13 
-*.warnAlt:	 nord13 
-*.highlight:	 nord10
-*.highlightAlt:	 nord9
+*.backgroundAlt:      nord0
+*.backgroundLight:    nord2
+*.alert:	      nord11
+*.alertAlt:	      nord12
+*.warn:		      nord13
+*.warnAlt:	      nord13
+*.highlight:	      nord10
+*.highlightAlt:	      nord9
 
 ! possibility to modify the text color when over highlight
 *.highlightForeground: #151523 

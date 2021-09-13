@@ -3,17 +3,18 @@
 ! -------------------
 
 ! special
-*.foreground:	#a8afa5 
-*.background: 	#151523 
-*.cursorColor:	#97a2bc 
+*.foreground:	#a8afa5
+*.background: 	#151523
+*.cursorColor:	#97a2bc
 
-*.backgroundAlt: #3f415c 
-*.alert: 	 #d62839 
-*.alertAlt:	 #d62839 
-*.warn:		 #f4d35e 
-*.warnAlt:	 #f4d35e 
-*.highlight:	 #ecbf69 
-*.highlightAlt:	 #edc783
+*.backgroundAlt: 	#3f415c
+*.backgroundLight:	#5d718c
+*.alert: 	 	#d62839
+*.alertAlt:	 	#d62839
+*.warn:		 	#f4d35e
+*.warnAlt:	 	#f4d35e
+*.highlight:	 	#ecbf69
+*.highlightAlt:	 	#edc783
 
 ! possibility to modify the text color when over highlight
 *.highlightForeground: #151523 

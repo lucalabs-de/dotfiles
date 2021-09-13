@@ -7,13 +7,14 @@
 *.background: 	#282828
 *.cursorColor:	#ebdbb2
 
-*.backgroundAlt: #1d2021
-*.alert: 	 #cc241d
-*.alertAlt:	 #fb4934 
-*.warn:		 #d65d0e 
-*.warnAlt:	 #fe8019 
-*.highlight:	 #689d6a
-*.highlightAlt:	 #98971a
+*.backgroundAlt:	#1d2021
+*.backgroundLight: 	#32302f
+*.alert: 	 	#cc241d
+*.alertAlt:	 	#fb4934
+*.warn:		 	#d65d0e
+*.warnAlt:	 	#fe8019
+*.highlight:	 	#689d6a
+*.highlightAlt:	 	#98971a
 
 ! possibility to modify the text color when over highlight
 *.highlightForeground: #ebdbb2
