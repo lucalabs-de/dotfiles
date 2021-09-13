@@ -104,7 +104,7 @@ control_regex="#\w{2,3}(\+[0-9]+)?:\w+"
 cat $TEMPLATE_FILE | while read -r line; do
     # skip if the current line does not contain template strings
     if ! [[ $line =~ $control_regex ]]; then
-	echo $line >> $OUTPUT_FILE
+	echo "$line" >> $OUTPUT_FILE
 	continue
     fi
 
