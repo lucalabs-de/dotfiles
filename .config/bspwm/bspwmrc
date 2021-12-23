@@ -9,6 +9,7 @@ xrdb -merge "$THEME/colors"
 echo "$THEME" > "$HOME/.currenttheme"
 cp "$THEME/env" "$HOME/.currentenv"
 
+
 # fill config templates with theme colors
 . $HOME/.scripts/setup-configs
 
@@ -108,6 +109,3 @@ sleep 1
 
 # setup audio & visualization
 #mopidy &
-
-
-
