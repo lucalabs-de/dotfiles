@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script replaces color placeholders by their Xresources equivalents
+# This script replaces color placeholders by their Xresources equivalents.
 #
 #
 

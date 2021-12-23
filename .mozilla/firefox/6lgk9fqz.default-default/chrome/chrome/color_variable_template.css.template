@@ -18,7 +18,7 @@ See the above repository for updates as well as full license text. */
     --lwt-selected-tab-background-color: #RGB:backgroundAlt# !important;
 
     /* toolbar area */
-    --toolbarbutton-icon-fill: #RGB:color7# !important;
+    --toolbarbutton-icon-fill: #RGB:foreground# !important;
     --toolbarbutton-icon-fill-attention: #RGB:highlight# !important;
     --toolbar-bgcolor: #RGB:background# !important;
     --toolbar-color: #RGB:foreground# !important;
@@ -29,6 +29,7 @@ See the above repository for updates as well as full license text. */
     --toolbar-field-border-color: #RGB:backgroundAlt# !important;
     --toolbar-field-focus-border-color: #RGB:backgroundAlt# !important;
     --urlbar-popup-url-color: #RGB:highlightAlt# !important;
+    --autocomplete-popup-separator-color: #RGB:backgroundLight# !important;
 
     /* urlbar Firefox < 92 */
     --lwt-toolbar-field-background-color: #RGB:backgroundLight# !important;
@@ -55,6 +56,8 @@ See the above repository for updates as well as full license text. */
 #urlbar[open] > #urlbar-input-container {
     border-color: #RGB:highlight# !important;
     border-bottom: none !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
 
 /* Line above tabs */

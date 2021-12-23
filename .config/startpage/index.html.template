@@ -33,31 +33,56 @@
           -webkit-text-fill-color: transparent;
       }
       
-      input {
-          height: 28px;
-          border-radius: 6px;
+      p {	  
+	  max-width: 60%;
           color: #RGB:foreground#;
-          background-color: #00000033;
           border: none;
           text-align: center;
+	  font-family: Fantasque Sans Mono;
+	  font-size: 14pt;
       }
     </style>
-    <script>
-      const quotes = [
-	["Imagination is more important than knowledge.", "Albert Einstein"],
-	["Although greed is considered one of the seven deadly sins, it turns out that greedy algorithms often perform quite well."],
-	["Discoveries come in many different ways, and the most important thing is to be ready for them."],
-	["Science is supposedly the method by which we stand on the shoulders of those who came before us. In computer science, we all are standing on each others' feet"],
-	["There are two difficult things in computer science: cache invalidation, naming things, and off-by-one errors"]
-      ]
-    </script>
+    <link rel="preconnect" href="http://www.developerexcuses.com" crossorigin>
+    <link rel="dns-prefetch" href="http://www.devexcuses.com">
   </head>
   
   <body>
     <h1><a class="fire">fire</a>fox</h1>
-    <form action="https://duckduckgo.com/" method="GET">
-      <input autofocus name="q" type="search" placeholder="search with ddg" autofocus>
-    </form>
+    <p id="quote"/>
+
+    <script>
+      const quotes = [
+	"Imagination is more important than knowledge.",
+	"Although greed is considered one of the seven deadly sins, it turns out that greedy algorithms often perform quite well.",
+	"Discoveries come in many different ways, and the most important thing is to be ready for them.",
+	"Science is supposedly the method by which we stand on the shoulders of those who came before us. In computer science, we all are standing on each others' feet.",
+	"There are two difficult things in computer science: cache invalidation, naming things, and off-by-one errors."
+      ]
+
+      const REX = /<a.*?>(.*?)<\/a>/;
+      const URL = 'https://devexcuses.com';
+
+      fetch(new Request(URL))
+        .then(response => {
+	  if (response.ok) {
+	    return response.text();
+	  }
+	  throw new Error("Internet disconnected");
+	})
+       .then(response => {
+	 const match = REX.exec(response);
+	 if (match) {
+	   document.getElementById("quote").innerHTML = match[1]
+	 } else {
+	   throw new Error("no match")
+	 }
+       })
+       .catch(() => {
+	 const randomQuote = quotes[Math.floor(Math.random()*quotes.length)]
+	 console.log(randomQuote)
+	 document.getElementById("quote").innerHTML = randomQuote
+       })
+    </script>
   </body>
   
 </html>
