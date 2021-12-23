@@ -32,6 +32,12 @@
 (setq scroll-margin 6) 
 
 ;; load theme according to system theme
+(use-package gruvbox-theme
+  :ensure t)
+
+(use-package nord-theme
+  :ensure t)
+
 (use-package load-env-vars
   :ensure t
   :config
@@ -84,10 +90,6 @@
 ;; save files
 (setq backup-directory-alist '(("." . "~/.saves")))
 
-;; orgmode
-(setq org-agenda-files (list "~/org/work.org"
-                             "~/org/home.org"))
-
 ;; Start Screen
 (use-package dashboard
   :ensure t
@@ -95,13 +97,14 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-project-backend 'projectile)
   (setq dashboard-items '((projects . 5)
-			  (recents . 5)))
+			  (recents . 5)
+			  (agenda . 10)))
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-banner-logo-title "Welcome back <3")
   (setq dashboard-footer-messages '("Happy coding!"
 				    "I showed you my source code, pls respond"
 				    "A monad is just a monoid in the category of endofunctors, what's the problem?"
-				    "(λxy.y(xxy)(λxy.y(xxy))")))
+				    "(λxy.y(xxy))(λxy.y(xxy))")))
 
 ;; Discovery
 (use-package which-key
@@ -133,8 +136,8 @@
 
 ; Javascript
 (add-hook 'js-mode-hook 'lsp-deferred)
-(setq js-indent-level 2)
-(setq indent-tabs-mode nil)
+(setq-default js-indent-level 2)
+(setq-default indent-tabs-mode nil)
 
 ; JSX/TSX
 (use-package web-mode
@@ -171,7 +174,7 @@
   :ensure t
   :init
   (setq eslintd-fix-executable "/home/lucalabs/n/bin/eslint_d")
-  (setq eslintd-fix-portfile "~/.eslint_d")
+;  (setq eslintd-fix-portfile "/home/lucalabs/.eslint_d")
   :hook (js-mode . eslintd-fix-mode)
         (typescript-mode . eslintd-fix-mode)
         (web-mode . eslintd-fix-mode))
@@ -244,7 +247,8 @@
     (setq projectile-project-search-path '("~/Projects")))
   (setq projectile-switch-project-action #'projectile-dired))
 
-(use-package swiper :ensure t)
+(use-package swiper
+  :ensure t)
 
 ;; git
 (use-package magit
@@ -255,12 +259,14 @@
 ;; TeX
 (use-package tex
   :ensure auctex
-  :hook (tex . (TeX-fold-mode))
+  :hook ((tex . (TeX-fold-mode))
+         (tex . (TeX-source-correlate-mode)))
   :config
   (setq-default TeX-master nil)
   (setq TeX-parse-self t)
   (setq TeX-auto-save t)
   (setq TeX-PDF-mode t)
+  (setq TeX-source-correlate-method 'synctex)
   (setq TeX-view-program-selection '((output-pdf "Zathura"))
 	TeX-source-correlate-start-server t))
 
@@ -279,11 +285,13 @@
   (setq org-hide-emphasis-markers t)
   (setq org-ellipsis " ▾")
   (setq org-todo-keywords
-	'((sequence "TODO" "ACTIVE" "DONE")))
+	'((sequence "TODO" "ACTIVE" "|" "DONE" "CANCELED")))
   (setq org-todo-keyword-faces
 	'(("ACTIVE" . "magenta")))
   (setq org-format-latex-options
 	(plist-put org-format-latex-options :scale 2.0))
+  (setq org-agenda-files (list "~/org/work.org"
+                             "~/org/home.org"))
   (setup-orgmode-export))
 
 (use-package org-bullets
@@ -315,3 +323,4 @@
 		   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
 		   ("\\paragraph{%s}" . "\\paragraph*{%s}")
 		   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+(put 'downcase-region 'disabled nil)
