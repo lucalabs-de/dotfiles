@@ -147,3 +147,10 @@ super + F6
 # decrease brightness
 super + F5
       xbacklight -dec 5
+
+# language
+super + shift + {d,r,д,р}
+      setxkbmap -layout de -variant {basic,ru,basic,ru}
+
+super + alt + t
+      ./$HOME/.scripts/choose-theme
